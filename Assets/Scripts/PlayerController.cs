@@ -33,11 +33,6 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     private void PlayerRotateControl()
     {
         if(PlayerTrans == null || EyeTrans == null)
