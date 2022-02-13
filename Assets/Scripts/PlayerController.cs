@@ -18,11 +18,13 @@ public class PlayerController : MonoBehaviour
     public Transform CheckPoint;
     public float magrin = 0.1f;
     public float JumpSpeed = 5.0f;
+    public HoverBotAnimatorController AnimatorController;
 
     void Start()
     {
         VerticalOffset = 0;
         CC = this.GetComponent<CharacterController>();
+        AnimatorController = this.GetComponent<HoverBotAnimatorController>();
     }
 
     void Update()
@@ -81,5 +83,17 @@ public class PlayerController : MonoBehaviour
         MoveValue += Vector3.down * FallVelocity * Time.deltaTime;
 
         CC.Move(MoveValue);
+
+        // Animator
+        if(MoveValue != Vector3.zero)
+        {
+            AnimatorController.MoveSpeed = MoveValue.magnitude / Time.deltaTime;
+            AnimatorController.Alerted = true;
+        }
+        else
+        {
+            AnimatorController.MoveSpeed = 0;
+            AnimatorController.Alerted = false;
+        }
     }
 }

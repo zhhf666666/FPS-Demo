@@ -973,6 +973,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8460168511802747396}
   - component: {fileID: 409209961880719738}
+  - component: {fileID: 2288473405691703265}
+  - component: {fileID: 919879863360128451}
   - component: {fileID: 972153535}
   m_Layer: 0
   m_Name: Player
@@ -1016,6 +1018,30 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &2288473405691703265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460168511802747399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb464ace8913571449b755b680277510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &919879863360128451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460168511802747399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb464ace8913571449b755b680277510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &972153535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,6 +1061,11 @@ MonoBehaviour:
   VerticalOffsetLimitation: 60
   CC: {fileID: 409209961880719738}
   MoveSpeed: 5
+  G: 9.8
+  FallVelocity: 0
+  CheckPoint: {fileID: 8460168512819763293}
+  magrin: 0.1
+  JumpSpeed: 5
 --- !u!1 &8460168512275718481
 GameObject:
   m_ObjectHideFlags: 0

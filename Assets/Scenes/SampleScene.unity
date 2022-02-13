@@ -50438,11 +50438,6 @@ MonoBehaviour:
   xyzCount: {x: 2, y: 1, z: 2}
   FloorSize: {x: 0, y: 0, z: 0}
   floors: []
---- !u!4 &1857092910 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8460168512819763293, guid: 2ec678ee16cf89a42b62c876e81f4151, type: 3}
-  m_PrefabInstance: {fileID: 8460168512709806266}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1859146200
 GameObject:
   m_ObjectHideFlags: 0
@@ -58661,10 +58656,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 972153535, guid: 2ec678ee16cf89a42b62c876e81f4151, type: 3}
-      propertyPath: CheckPoint
-      value: 
-      objectReference: {fileID: 1857092910}
     - target: {fileID: 8460168511802747396, guid: 2ec678ee16cf89a42b62c876e81f4151, type: 3}
       propertyPath: m_RootOrder
       value: 2
