@@ -22,6 +22,7 @@ public class Pistol : MonoBehaviour
     void Update()
     {
         OpenFire();
+        RayFunc();
     }
 
     private void OpenFire()
@@ -78,5 +79,11 @@ public class Pistol : MonoBehaviour
         {
             ShotAudio.Play();
         }
+    }
+
+    private void RayFunc()
+    {
+        Ray ray = new Ray(BulletStartPos.position, BulletStartPos.forward);
+        Debug.DrawRay(ray.origin, ray.direction*1000, Color.red);
     }
 }
