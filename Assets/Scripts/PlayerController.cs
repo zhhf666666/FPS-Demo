@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public float RotateRatio = 1;
     public Transform PlayerTrans;
     public Transform EyeTrans;
-    private float VerticalOffset;
     public float VerticalOffsetLimitation = 60;
     public CharacterController CC;
     public float MoveSpeed = 10;
@@ -22,7 +21,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        VerticalOffset = 0;
         CC = this.GetComponent<CharacterController>();
         AnimatorController = this.GetComponent<HoverBotAnimatorController>();
     }
@@ -40,9 +38,18 @@ public class PlayerController : MonoBehaviour
         float offset_x = Input.GetAxis("Mouse X");   // Horizontal
         float offset_y = Input.GetAxis("Mouse Y");   // Vertical
         PlayerTrans.Rotate(Vector3.up * offset_x * RotateSpeed * RotateRatio * Time.deltaTime);
+        float VerticalOffset = CheckAngle(EyeTrans.localEulerAngles.x);
         VerticalOffset -= offset_y * RotateSpeed * RotateRatio * Time.deltaTime;
         VerticalOffset = Mathf.Clamp(VerticalOffset, -VerticalOffsetLimitation, VerticalOffsetLimitation);
         EyeTrans.localRotation = Quaternion.Euler(new Vector3(VerticalOffset, EyeTrans.localEulerAngles.y, EyeTrans.localEulerAngles.z));
+    }
+
+    private float CheckAngle(float value)
+    {
+        float angle = value - 180;
+	    if(angle > 0)
+		    return angle - 180;
+	    return angle + 180;
     }
 
     public bool IsOnGround()

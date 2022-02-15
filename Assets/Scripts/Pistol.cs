@@ -9,13 +9,16 @@ public class Pistol : MonoBehaviour
     public float BulletSpeed = 50.0f;
     public float FireIntervalTime = 0.1f;
     private bool CanFire = true;
-    //public float LerpRatio = 0.2f;
+    public Transform DefaultPos;
+    public Transform BackPos;
+    public float LerpRatio = 0.2f;
     public AudioSource ShotAudio;
     public float RecoilAngle_X = 2;
     public float RecoilTime = 0.06f;
     public float RecoverTime = 0.09f;
     public Transform Eye;
     public float VerticalOffsetLimitation = 60;
+    public Transform WeaponCamera;
 
 
     void Start()
@@ -58,8 +61,11 @@ public class Pistol : MonoBehaviour
             GameObject NewBullet = Instantiate(Bullet, BulletStartPos.position, BulletStartPos.rotation);
             NewBullet.GetComponent<Rigidbody>().velocity = NewBullet.transform.forward * BulletSpeed;
             PlayShotAudio();
+            WeaponCamera.localEulerAngles = Vector3.zero;
             StopCoroutine("Recoil");
+            StopCoroutine("RecoilAnimation");
             StartCoroutine("Recoil");
+            StartCoroutine("RecoilAnimation");
             Destroy(NewBullet, 5);
             CanFire = false;
             yield return new WaitForSeconds(FireIntervalTime);
@@ -97,22 +103,41 @@ public class Pistol : MonoBehaviour
                 TempTime += Time.deltaTime;
                 float offset = RecoilAngle_X * Time.deltaTime / RecoilTime;
                 float new_angle = Eye.localEulerAngles.x - offset;
-                //new_angle = Mathf.Clamp(new_angle, -VerticalOffsetLimitation, VerticalOffsetLimitation);
-                //Eye.localRotation = Quaternion.Euler(new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z));
+                float new_angle2 = WeaponCamera.localEulerAngles.x + offset;
+                WeaponCamera.localEulerAngles = new Vector3(new_angle2, 0, 0);
                 Eye.localEulerAngles = new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z);
                 yield return null;
             }
             // Recover
-            /*TempTime = 0;
+            TempTime = 0;
             while(TempTime < RecoverTime)
             {
                 TempTime += Time.deltaTime;
                 float offset = RecoilAngle_X * Time.deltaTime / RecoverTime;
                 float new_angle = Eye.localEulerAngles.x + offset;
-                //new_angle = Mathf.Clamp(new_angle, -VerticalOffsetLimitation, VerticalOffsetLimitation);
-                Eye.localRotation = Quaternion.Euler(new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z));
+                float new_angle2 = WeaponCamera.localEulerAngles.x - offset;
+                WeaponCamera.localEulerAngles = new Vector3(new_angle2, 0, 0);
+                Eye.localEulerAngles = new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z);
                 yield return null;
-            }*/
+            }
+            WeaponCamera.localEulerAngles = Vector3.zero;
+        }
+    }
+
+    IEnumerator RecoilAnimation()
+    {
+        if(DefaultPos != null && BackPos != null)
+        {
+            while(this.transform.localPosition != BackPos.localPosition)
+            {
+                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, BackPos.localPosition, LerpRatio*4);
+                yield return null;
+            }
+            while(this.transform.localPosition != DefaultPos.localPosition)
+            {
+                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, DefaultPos.localPosition, LerpRatio);
+                yield return null;
+            }
         }
     }
 
