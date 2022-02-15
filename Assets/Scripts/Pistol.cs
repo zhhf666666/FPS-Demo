@@ -8,10 +8,14 @@ public class Pistol : MonoBehaviour
     public GameObject Bullet;
     public float BulletSpeed = 50.0f;
     public float FireIntervalTime = 0.1f;
-    private bool IsFire;
-    public Transform BackPos;
-    public float LerpRatio = 0.2f;
+    private bool CanFire = true;
+    //public float LerpRatio = 0.2f;
     public AudioSource ShotAudio;
+    public float RecoilAngle_X = 2;
+    public float RecoilTime = 0.06f;
+    public float RecoverTime = 0.09f;
+    public Transform Eye;
+    public float VerticalOffsetLimitation = 60;
 
 
     void Start()
@@ -27,6 +31,7 @@ public class Pistol : MonoBehaviour
 
     private void OpenFire()
     {
+        /* Running Fire
         if(Input.GetMouseButtonDown(0))
         {
             IsFire = true;
@@ -37,9 +42,33 @@ public class Pistol : MonoBehaviour
             IsFire = false;
             StopCoroutine("Fire");
         }
+        */
+
+        // Single Fire
+        if(Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine("SingleFire");
+        }
     }
 
-    IEnumerator Fire()
+    IEnumerator SingleFire()
+    {
+        if(CanFire && BulletStartPos != null && Bullet != null)
+        {
+            GameObject NewBullet = Instantiate(Bullet, BulletStartPos.position, BulletStartPos.rotation);
+            NewBullet.GetComponent<Rigidbody>().velocity = NewBullet.transform.forward * BulletSpeed;
+            PlayShotAudio();
+            StopCoroutine("Recoil");
+            StartCoroutine("Recoil");
+            Destroy(NewBullet, 5);
+            CanFire = false;
+            yield return new WaitForSeconds(FireIntervalTime);
+            CanFire = true;
+        }       
+    }
+
+    /*
+    IEnumerator RunningFire()
     {
         while(IsFire)
         {
@@ -55,23 +84,37 @@ public class Pistol : MonoBehaviour
             yield return new WaitForSeconds(FireIntervalTime);
         }       
     }
+    */
 
-    /*IEnumerator Recoil()
+    IEnumerator Recoil()
     {
-        if(BackPos != null)
+        if(Eye != null) 
         {
-            while(this.transform.localPosition != BackPos.localPosition)
+            // Recoil
+            float TempTime = 0;
+            while(TempTime < RecoilTime)
             {
-                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, BackPos.localPosition, LerpRatio*4);
+                TempTime += Time.deltaTime;
+                float offset = RecoilAngle_X * Time.deltaTime / RecoilTime;
+                float new_angle = Eye.localEulerAngles.x - offset;
+                //new_angle = Mathf.Clamp(new_angle, -VerticalOffsetLimitation, VerticalOffsetLimitation);
+                //Eye.localRotation = Quaternion.Euler(new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z));
+                Eye.localEulerAngles = new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z);
                 yield return null;
             }
-            while(this.transform.localPosition != BackPos.localPosition)
+            // Recover
+            /*TempTime = 0;
+            while(TempTime < RecoverTime)
             {
-                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, BackPos.localPosition, LerpRatio*4);
+                TempTime += Time.deltaTime;
+                float offset = RecoilAngle_X * Time.deltaTime / RecoverTime;
+                float new_angle = Eye.localEulerAngles.x + offset;
+                //new_angle = Mathf.Clamp(new_angle, -VerticalOffsetLimitation, VerticalOffsetLimitation);
+                Eye.localRotation = Quaternion.Euler(new Vector3(new_angle, Eye.localEulerAngles.y, Eye.localEulerAngles.z));
                 yield return null;
-            }
+            }*/
         }
-    }*/
+    }
 
     private void PlayShotAudio()
     {
