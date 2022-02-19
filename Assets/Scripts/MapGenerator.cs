@@ -7,6 +7,7 @@ public class MapGenerator : MonoBehaviour
     public Vector3 xyzCount = Vector3.zero;
     public Vector3 FloorSize = Vector3.zero;
     public List<Transform> floors = new List<Transform>();
+    public List<Transform> walls = new List<Transform>();
 
     [ContextMenu("Reset Floor Layout")]
     private void ResetFloorLayout()
@@ -27,6 +28,41 @@ public class MapGenerator : MonoBehaviour
                 floors[index].localPosition = pos;
                 index++;
             }
+        }
+    }
+    
+    [ContextMenu("Reset Wall Layout (Special)")]
+    private void ResetWallLayout()
+    {
+        walls.Clear();
+        var children = this.GetComponentsInChildren<Transform>();
+        for(int i=1;i<children.Length;i++)
+        {
+            if(children[i].gameObject.CompareTag("Wall"))
+            {
+                children[i].localEulerAngles = Vector3.zero;
+                walls.Add(children[i]);
+            }
+        }
+        int index = 0;
+        for(int j=0;j<20;j++)
+        {
+            Vector3 pos1 = new Vector3(-30.255f, 0, -30+3*j);
+            Vector3 pos2 = new Vector3(30.255f, 0, -30+3*j);
+            walls[index].localPosition = pos1;
+            walls[index+1].localPosition = pos2;
+            index += 2;
+        }
+        for(int j=0;j<20;j++)
+        {
+            Vector3 pos1 = new Vector3(-30+3*j, 0, -30.255f);
+            Vector3 pos2 = new Vector3(-30+3*j, 0, 30.255f);
+            Vector3 angle = new Vector3(0, 90, 0);
+            walls[index].Rotate(angle);
+            walls[index+1].Rotate(angle);
+            walls[index].localPosition = pos1;
+            walls[index+1].localPosition = pos2;
+            index += 2;
         }
     }
 }
