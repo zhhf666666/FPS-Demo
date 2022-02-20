@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3429735236940810149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3429735237355471672}
@@ -204,7 +204,7 @@ MonoBehaviour:
   VerticalOffsetLimitation: 60
   CC: {fileID: 6871822587281191700}
   MoveSpeed: 5
-  G: 9.8
+  G: 12
   FallVelocity: 0
   CheckPoint: {fileID: 3429735235749952051}
   magrin: 0.1
@@ -375,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_L_Wing02_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518915}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_L_Wing01_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518917}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_Cap_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8408061497162518919}
   - component: {fileID: 8408061497172049511}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HoverBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_R_Wing03_Jnt_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_R_Wing02_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_R_Wing01_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bot_L_Wing03_Jnt_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518929}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front_Panel_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518931}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EyeBall_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8408061497162518933}
   - component: {fileID: 8408061497176342693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EyeBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8408061497162518935}
   - component: {fileID: 8408061497176342695}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518937}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Robot_Root_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518939}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Robot_FKRoot_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: IrisBlade_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front_Panel_C_Jnt_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1010,7 +1010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518945}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top_L_Ear02_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1040,7 +1040,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top_L_Ear01_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518949}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top_Cap_C_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1105,7 +1105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8408061497162518951}
   - component: {fileID: 8408061497176342691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1194,7 +1194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top_R_Ear02_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1224,7 +1224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408061497162518959}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top_R_Ear01_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
