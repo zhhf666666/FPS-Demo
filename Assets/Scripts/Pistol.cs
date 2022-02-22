@@ -19,6 +19,7 @@ public class Pistol : MonoBehaviour
     public Transform Eye;
     public float VerticalOffsetLimitation = 60;
     public Transform WeaponCamera;
+    public float Damage = 10;
 
 
     void Start()
@@ -60,13 +61,15 @@ public class Pistol : MonoBehaviour
         {
             GameObject NewBullet = Instantiate(Bullet, BulletStartPos.position, BulletStartPos.rotation);
             NewBullet.GetComponent<Rigidbody>().velocity = NewBullet.transform.forward * BulletSpeed;
+            NewBullet.GetComponent<BulletController>().BT = BulletType.Player_Bullet;
+            NewBullet.GetComponent<BulletController>().BulletDamage = Damage;
             PlayShotAudio();
             WeaponCamera.localEulerAngles = Vector3.zero;
             StopCoroutine("Recoil");
             StopCoroutine("RecoilAnimation");
             StartCoroutine("Recoil");
             StartCoroutine("RecoilAnimation");
-            Destroy(NewBullet, 5);
+            Destroy(NewBullet, 3);
             CanFire = false;
             yield return new WaitForSeconds(FireIntervalTime);
             CanFire = true;
@@ -85,7 +88,7 @@ public class Pistol : MonoBehaviour
                 PlayShotAudio();
                 //StopCoroutine("Recoil");
                 //StartCoroutine("Recoil");
-                Destroy(NewBullet, 5);
+                Destroy(NewBullet, 3);
             }
             yield return new WaitForSeconds(FireIntervalTime);
         }       
