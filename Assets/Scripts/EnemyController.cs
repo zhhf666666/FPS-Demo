@@ -8,10 +8,12 @@ public class EnemyController : MonoBehaviour
     public NavMeshAgent EnemyAgent;
     public GameObject Player;
     public float MinDistance = 5;
+    public HoverBotAnimatorController Ani;
 
     void Start()
     {
         EnemyAgent = this.GetComponent<NavMeshAgent>();
+        Ani = this.GetComponent<HoverBotAnimatorController>();
         Player = GameObject.FindGameObjectWithTag("Player");
         EnemyAgent.destination = this.transform.position;
     }
@@ -19,9 +21,16 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         if(CheckDistance())
+        {
             EnemyAgent.destination = Player.transform.position;
+            Ani.Alerted = true;
+            Ani.MoveSpeed = EnemyAgent.speed;
+        }
         else
+        {
             RandomNavigation();
+            Ani.Alerted = false;
+        }
     }
 
     void RandomNavigation()

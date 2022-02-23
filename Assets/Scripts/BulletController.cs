@@ -28,6 +28,7 @@ public class BulletController : MonoBehaviour
         if(BT == BulletType.Player_Bullet && collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<HealthController>().Damage(BulletDamage);
+            collision.gameObject.GetComponent<EnemyController>().Ani.TriggerOnDamage();
         }
         else if(BT == BulletType.Enemy_Bullet && collision.gameObject.CompareTag("Player"))
         {

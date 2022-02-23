@@ -748,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletStartPos: {fileID: 7344149816345912918}
   Bullet: {fileID: 6768690615239093655, guid: e865cdcb222ba69439bc6496457b01ba, type: 3}
-  BulletSpeed: 100
+  BulletSpeed: 300
   FireIntervalTime: 0.1
   DefaultPos: {fileID: 7344149815060077344}
   BackPos: {fileID: 7344149814965381848}
@@ -760,6 +760,7 @@ MonoBehaviour:
   Eye: {fileID: 0}
   VerticalOffsetLimitation: 60
   WeaponCamera: {fileID: 0}
+  Damage: 30
 --- !u!82 &8244718953121841256
 AudioSource:
   m_ObjectHideFlags: 0
