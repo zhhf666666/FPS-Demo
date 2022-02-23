@@ -760,7 +760,7 @@ MonoBehaviour:
   Eye: {fileID: 0}
   VerticalOffsetLimitation: 60
   WeaponCamera: {fileID: 0}
-  Damage: 30
+  Damage: 1
 --- !u!82 &8244718953121841256
 AudioSource:
   m_ObjectHideFlags: 0

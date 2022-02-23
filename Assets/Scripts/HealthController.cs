@@ -9,6 +9,7 @@ public class HealthController : MonoBehaviour
     public float MaxPH = 300;
     public Slider PHSlider;
     //public TextMesh HealthNum;
+    public GameObject RobotExplosion;
 
     void Start()
     {
@@ -35,6 +36,17 @@ public class HealthController : MonoBehaviour
         {
             // Death
             PHSlider.value = 0;
+            PlayRobotExplosion();
+            
+        }
+    }
+
+    private void PlayRobotExplosion()
+    {
+        if(RobotExplosion)
+        {
+            GameObject NewExplosion = Instantiate(RobotExplosion, this.transform.position, RobotExplosion.transform.rotation);
+            Destroy(NewExplosion, 2);
         }
     }
 }
