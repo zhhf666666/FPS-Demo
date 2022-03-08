@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
-    public float PH = 100;
-    public float MaxPH = 300;
+    public int HP = 100;
+    public int MaxPH = 300;
     public Slider PHSlider;
-    //public TextMesh HealthNum;
+    public Text HealthNum;
     public GameObject RobotExplosion;
 
     void Start()
     {
-        PHSlider.value = PH;
+        PHSlider.value = HP;
+        SetText();
     }
 
     void Update()
@@ -21,24 +22,20 @@ public class HealthController : MonoBehaviour
         
     }
 
-    public void Damage(float damage)
+    public void Damage(int damage)
     {
-        PH -= damage;
-        if(PH > 0)
+        HP -= damage;
+        if(HP > 0)
         {
-            PHSlider.value = PH;
-            //if(gameObject.CompareTag("Player"))
-            //{
-            //    HealthNum.text = PH.ToString();
-            //}
+            PHSlider.value = HP;
         }
-        if(PH <= 0)
+        if(HP <= 0)
         {
             // Death
             PHSlider.value = 0;
-            PlayRobotExplosion();
-            
+            PlayRobotExplosion();   
         }
+        SetText();
     }
 
     private void PlayRobotExplosion()
@@ -48,5 +45,10 @@ public class HealthController : MonoBehaviour
             GameObject NewExplosion = Instantiate(RobotExplosion, this.transform.position, RobotExplosion.transform.rotation);
             Destroy(NewExplosion, 2);
         }
+    }
+
+    private void SetText()
+    {
+        HealthNum.text = "HP: " + HP.ToString();
     }
 }

@@ -19,13 +19,13 @@ public class Pistol : MonoBehaviour
     public Transform Eye;
     public float VerticalOffsetLimitation = 60;
     public Transform WeaponCamera;
-    public float Damage = 10;
+    public int Damage = 10;
     public Transform[] ReloadObject;
     private bool IsReloading = false;
     private int IsReloadingUp = 1;
     public float ReloadSpeed = 0.01f;
     public float ReloadWaitTime = 1;
-
+    public BulletAmountController BAC;
 
     void Start()
     {
@@ -53,8 +53,11 @@ public class Pistol : MonoBehaviour
             StopCoroutine("Fire");
         }
         */
-
         // Single Fire
+        if(!BAC.CheckCurrent())
+        {
+            return;
+        }
         if(Input.GetMouseButtonDown(0))
         {
             StartCoroutine("SingleFire");
@@ -69,13 +72,14 @@ public class Pistol : MonoBehaviour
             NewBullet.GetComponent<Rigidbody>().velocity = NewBullet.transform.forward * BulletSpeed;
             NewBullet.GetComponent<BulletController>().BT = BulletType.Player_Bullet;
             NewBullet.GetComponent<BulletController>().BulletDamage = Damage;
+            BAC.Consume();
             PlayShotAudio();
             WeaponCamera.localEulerAngles = Vector3.zero;
             StopCoroutine("Recoil");
             StopCoroutine("RecoilAnimation");
             StartCoroutine("Recoil");
             StartCoroutine("RecoilAnimation");
-            Destroy(NewBullet, 3);
+            Destroy(NewBullet, 1);
             CanFire = false;
             yield return new WaitForSeconds(FireIntervalTime);
             CanFire = true;
@@ -94,7 +98,7 @@ public class Pistol : MonoBehaviour
                 PlayShotAudio();
                 //StopCoroutine("Recoil");
                 //StartCoroutine("Recoil");
-                Destroy(NewBullet, 3);
+                Destroy(NewBullet, 1);
             }
             yield return new WaitForSeconds(FireIntervalTime);
         }       
@@ -168,7 +172,7 @@ public class Pistol : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
-            if(!IsReloading)
+            if(!IsReloading && BAC.CheckReload())
             {
                 StartCoroutine("Reload");
             }
@@ -240,5 +244,6 @@ public class Pistol : MonoBehaviour
             yield return null;
         }
         IsReloading = false;
+        BAC.Reload();
     }
 }

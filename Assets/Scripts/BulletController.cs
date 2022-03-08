@@ -11,7 +11,7 @@ public enum BulletType
 public class BulletController : MonoBehaviour
 {
     public BulletType BT = BulletType.Player_Bullet;
-    public float BulletDamage = 10;
+    public int BulletDamage = 10;
     public GameObject BulletExplosion;
 
     void Start()

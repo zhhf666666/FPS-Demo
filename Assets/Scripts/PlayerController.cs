@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     {
         CC = this.GetComponent<CharacterController>();
         //AnimatorController = this.GetComponent<HoverBotAnimatorController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
