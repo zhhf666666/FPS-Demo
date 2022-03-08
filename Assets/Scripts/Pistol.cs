@@ -20,6 +20,11 @@ public class Pistol : MonoBehaviour
     public float VerticalOffsetLimitation = 60;
     public Transform WeaponCamera;
     public float Damage = 10;
+    public Transform[] ReloadObject;
+    private bool IsReloading = false;
+    private int IsReloadingUp = 1;
+    public float ReloadSpeed = 0.01f;
+    public float ReloadWaitTime = 1;
 
 
     void Start()
@@ -31,6 +36,7 @@ public class Pistol : MonoBehaviour
     {
         OpenFire();
         RayFunc();
+        Reloading();
     }
 
     private void OpenFire()
@@ -156,5 +162,83 @@ public class Pistol : MonoBehaviour
     {
         Ray ray = new Ray(BulletStartPos.position, BulletStartPos.forward);
         Debug.DrawRay(ray.origin, ray.direction*1000, Color.red);
+    }
+
+    private void Reloading()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if(!IsReloading)
+            {
+                StartCoroutine("Reload");
+            }
+        }
+    }
+
+    IEnumerator Reload()
+    {
+        IsReloading = true;
+        IsReloadingUp = 4;
+        while(IsReloadingUp != 0)
+        {
+            for(int i=0;i<4;i++)
+            {
+                float x,y;
+                if(IsReloadingUp > 0)
+                {
+                    if(ReloadObject[i].localPosition.y == 0.55f)
+                        continue;
+                    y = ReloadObject[i].localPosition.y + 0.699f * ReloadSpeed * Time.deltaTime;
+                    if(y >= 0.55f)
+                    {
+                        if(i <= 1)
+                            x = -0.145f;
+                        else
+                            x = 0.136f;
+                        ReloadObject[i].localPosition = new Vector3(x, 0.55f, ReloadObject[i].localPosition.z);
+                        IsReloadingUp--;
+                        if(IsReloadingUp == 0)
+                        {
+                            IsReloadingUp = -4;
+                            yield return new WaitForSeconds(ReloadWaitTime);
+                        }
+                            
+                    }
+                    else
+                    {
+                        if(i<=1)
+                            x = ReloadObject[i].localPosition.x - 0.301f * ReloadSpeed * Time.deltaTime;
+                        else
+                            x = ReloadObject[i].localPosition.x + 0.301f * ReloadSpeed * Time.deltaTime;
+                        ReloadObject[i].localPosition = new Vector3(x, y, ReloadObject[i].localPosition.z);
+                    }
+                }
+                else if(IsReloadingUp < 0)
+                {
+                    if(ReloadObject[i].localPosition.y == 0.39f)
+                        continue;
+                    y = ReloadObject[i].localPosition.y - 0.699f * ReloadSpeed * Time.deltaTime;
+                    if(y <= 0.39f)
+                    {
+                        if(i <= 1)
+                            x = -0.076f;
+                        else
+                            x = 0.067f;
+                        ReloadObject[i].localPosition = new Vector3(x, 0.39f, ReloadObject[i].localPosition.z);
+                        IsReloadingUp++;
+                    }
+                    else
+                    {
+                        if(i<=1)
+                            x = ReloadObject[i].localPosition.x + 0.301f * ReloadSpeed * Time.deltaTime;
+                        else
+                            x = ReloadObject[i].localPosition.x - 0.301f * ReloadSpeed * Time.deltaTime;
+                        ReloadObject[i].localPosition = new Vector3(x, y, ReloadObject[i].localPosition.z);
+                    }
+                }
+            }
+            yield return null;
+        }
+        IsReloading = false;
     }
 }
