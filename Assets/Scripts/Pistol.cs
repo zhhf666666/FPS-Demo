@@ -26,17 +26,21 @@ public class Pistol : MonoBehaviour
     public float ReloadSpeed = 0.01f;
     public float ReloadWaitTime = 1;
     public BulletAmountController BAC;
+    public WeaponSwitch WS;
 
     void Start()
     {
-        
+        BAC.SetText();
     }
 
     void Update()
     {
-        OpenFire();
-        RayFunc();
-        Reloading();
+        if(WS.Current == 0)
+        {
+            OpenFire();
+            RayFunc();
+            Reloading();
+        }
     }
 
     private void OpenFire()

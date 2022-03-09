@@ -26,6 +26,7 @@ public class Rifle : MonoBehaviour
     public float ReloadWaitTime = 1;
     public BulletAmountController BAC;
     private bool IsFire = false;
+    public WeaponSwitch WS;
 
     void Start()
     {
@@ -34,9 +35,12 @@ public class Rifle : MonoBehaviour
 
     void Update()
     {
-        OpenFire();
-        RayFunc();
-        Reloading();
+        if(WS.Current == 1)
+        {
+            OpenFire();
+            RayFunc();
+            Reloading();
+        }
     }
 
     private void OpenFire()

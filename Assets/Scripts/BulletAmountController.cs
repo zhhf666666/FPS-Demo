@@ -10,11 +10,15 @@ public class BulletAmountController : MonoBehaviour
     private int Current;
     private int Total;
 
-    void Start()
+    void Awake()
     {
         Current = Max;
         Total = Max * 2;
-        SetText();
+    }
+    
+    void Start()
+    {
+    
     }
 
     void Update()
@@ -22,7 +26,7 @@ public class BulletAmountController : MonoBehaviour
         
     }
 
-    void SetText()
+    public void SetText()
     {
         BulletAmount.text = Current.ToString() + '/' + Total.ToString();
     }
@@ -31,14 +35,14 @@ public class BulletAmountController : MonoBehaviour
     {
         if(Total == 0)
             return;
-        if(Total >= Max)
+        if(Current + Total >= Max)
         {
+            Total -= (Max - Current);
             Current = Max;
-            Total -= Max;
         }
         else
         {
-            Current = Total;
+            Current += Total;
             Total = 0;
         }
         SetText();
