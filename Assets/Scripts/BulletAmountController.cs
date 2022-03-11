@@ -58,7 +58,7 @@ public class BulletAmountController : MonoBehaviour
 
     public bool CheckReload()
     {
-        if(Total == 0)
+        if(Total == 0 || Current == Max)
             return false;
         else
             return true;

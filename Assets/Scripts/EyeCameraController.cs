@@ -14,7 +14,7 @@ public class EyeCameraController : MonoBehaviour
 
     void Start()
     {
-        
+        WeaponCameraCenterPos = new Vector3(0, 0.058f, -0.01f);   // Pistol
     }
 
     void Update()

@@ -31,11 +31,12 @@ public class Pistol : MonoBehaviour
     void Start()
     {
         BAC.SetText();
+        this.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
-        if(WS.Current == 0)
+        if(WS.Current == 0 && WS.CanFire == true)
         {
             OpenFire();
             RayFunc();
@@ -114,14 +115,16 @@ public class Pistol : MonoBehaviour
     {
         if(DefaultPos != null && BackPos != null)
         {
-            while(this.transform.localPosition != BackPos.localPosition)
+            while(this.transform.localPosition.z != BackPos.localPosition.z)
             {
-                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, BackPos.localPosition, LerpRatio*4);
+                float temp = Mathf.Lerp(this.transform.localPosition.z, BackPos.localPosition.z, LerpRatio*4);
+                this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, temp);
                 yield return null;
             }
             while(this.transform.localPosition != DefaultPos.localPosition)
             {
-                this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, DefaultPos.localPosition, LerpRatio);
+                float temp = Mathf.Lerp(this.transform.localPosition.z, DefaultPos.localPosition.z, LerpRatio);
+                this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, temp);
                 yield return null;
             }
         }

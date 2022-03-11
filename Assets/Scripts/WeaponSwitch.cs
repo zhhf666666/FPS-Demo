@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponSwitch : MonoBehaviour
 {
@@ -8,11 +9,15 @@ public class WeaponSwitch : MonoBehaviour
     public EyeCameraController ECC;
     public int Current = 0;
     private int Next = 0;
-    private int WeaponSize;
+    public float LerpRatio = 0.1f;
+    public Vector3[] CameraCenterParameter;
+    public bool CanFire = true;
+    public Image[] Icons;
 
     void Start()
     {
-        WeaponSize = Weapons.Length;
+        Icons[0].color = new Color32(255, 255, 255, 255);
+        Icons[1].color = new Color32(152, 152, 152, 255);
     }
 
     void Update()
@@ -35,12 +40,12 @@ public class WeaponSwitch : MonoBehaviour
         }
         else if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            Next = (Current + WeaponSize - 1) % WeaponSize;
+            Next = (Current + Weapons.Length - 1) % Weapons.Length;
             SwitchWeapon();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            Next = (Current + 1) % WeaponSize;
+            Next = (Current + 1) % Weapons.Length;
             SwitchWeapon();
         }
 
@@ -48,10 +53,40 @@ public class WeaponSwitch : MonoBehaviour
 
     void SwitchWeapon()
     {
+        StopCoroutine("RotateWeapon");
+        CanFire = false;
+        Icons[Current].color = new Color32(152, 152, 152, 255);
+        Icons[Next].color = new Color32(255, 255, 255, 255);
+        ECC.WeaponCameraCenterPos = CameraCenterParameter[Next];
         Weapons[Current].transform.localPosition = new Vector3(0, -100, 0);
-        Weapons[Next].transform.localPosition = new Vector3(0, 0, 0);
         Weapons[Next].GetComponent<BulletAmountController>().SetText();
-        //StartCoroutine("RotateWeapon");
+        StartCoroutine("RotateWeapon", Next);
         Current = Next;
+    }
+
+    IEnumerator RotateWeapon(int index)
+    {
+        Weapons[index].transform.localEulerAngles = new Vector3(90, 0 ,0);
+        Weapons[index].transform.localPosition = new Vector3(0, -1, 0);
+        while(Weapons[index].transform.localEulerAngles.x != 0 || Weapons[index].transform.localPosition.y != 0)
+        {
+            // 忽略插值误差
+            if(Weapons[index].transform.localEulerAngles.x < 1)
+                Weapons[index].transform.localEulerAngles = new Vector3(0, 0 ,0);
+            if(Weapons[index].transform.localPosition.y > -0.01f)
+                Weapons[index].transform.localPosition = new Vector3(0, 0, 0);
+            if(Weapons[index].transform.localEulerAngles.x != 0)
+            {
+                float angle = Mathf.Lerp(Weapons[index].transform.localEulerAngles.x, 0, LerpRatio);
+                Weapons[index].transform.localEulerAngles = new Vector3(angle, 0 ,0);
+            }
+            if(Weapons[index].transform.localPosition.y != 0)
+            {
+                float pos = Mathf.Lerp(Weapons[index].transform.localPosition.y, 0, LerpRatio);
+                Weapons[index].transform.localPosition = new Vector3(0, pos, 0);
+            }
+            yield return null;
+        }
+        CanFire = true;
     }
 }
