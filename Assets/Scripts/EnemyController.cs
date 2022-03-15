@@ -6,50 +6,30 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     public NavMeshAgent EnemyAgent;
-    public GameObject Player;
-    public float MinDistance = 5;
-    public HoverBotAnimatorController Ani;
-    private bool IsLiving = true;
+    public bool IsLiving = true;
     public HealthController HC;
     public float LerpRatio = 0.1f;
     public float DeathTime = 1;
+    public GameObject RobotExplosion;
+    public HoverBotAnimatorController HBAC;
+    public bool IsLocking = false;
 
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+    
     }
 
     void Update()
     {
-        if(!IsLiving)
-            return;
-        if(CheckDistance())
-        {
-            EnemyAgent.destination = Player.transform.position;
-            Ani.Alerted = true;
-            Ani.MoveSpeed = EnemyAgent.speed;
-        }
-        else
-        {
-            RandomNavigation();
-            Ani.Alerted = false;
-        }
+        
     }
 
-    void RandomNavigation()
+    public void RandomNavigation()
     {
         if(!EnemyAgent.pathPending && EnemyAgent.remainingDistance < 0.5f)
         {
-            EnemyAgent.destination = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
+            EnemyAgent.destination = new Vector3(Random.Range(-30f, 30f), 0, Random.Range(-30f, 30f));
         }
-    }
-
-    bool CheckDistance()
-    {
-        if(Vector3.Distance(EnemyAgent.transform.position, Player.transform.position) < MinDistance)
-            return true;
-        else
-            return false;
     }
 
     public void Birth()
@@ -63,6 +43,7 @@ public class EnemyController : MonoBehaviour
     {
         IsLiving = false;
         EnemyAgent.enabled = false;
+        PlayRobotExplosion();
         StartCoroutine("DeathAnimation");
     }
 
@@ -76,5 +57,14 @@ public class EnemyController : MonoBehaviour
         }
         yield return new WaitForSeconds(DeathTime);
         this.transform.position = new Vector3(0, -100, 0);
+    }
+
+    private void PlayRobotExplosion()
+    {
+        if(RobotExplosion)
+        {
+            GameObject NewExplosion = Instantiate(RobotExplosion, this.transform.position, RobotExplosion.transform.rotation);
+            Destroy(NewExplosion, 2);
+        }
     }
 }

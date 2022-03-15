@@ -9,7 +9,6 @@ public class HealthController : MonoBehaviour
     public int MaxHP = 300;
     public Slider PHSlider;
     public Text HealthNum;
-    public GameObject RobotExplosion;
     public EnemyController EC;
 
     void Start()
@@ -34,22 +33,12 @@ public class HealthController : MonoBehaviour
         {
             // Death
             PHSlider.value = 0;
-            PlayRobotExplosion();
             if(EC)
             {
                 EC.Death();
             }
         }
         SetText();
-    }
-
-    private void PlayRobotExplosion()
-    {
-        if(RobotExplosion)
-        {
-            GameObject NewExplosion = Instantiate(RobotExplosion, this.transform.position, RobotExplosion.transform.rotation);
-            Destroy(NewExplosion, 2);
-        }
     }
 
     private void SetText()

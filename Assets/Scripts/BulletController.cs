@@ -29,7 +29,8 @@ public class BulletController : MonoBehaviour
         if(BT == BulletType.Player_Bullet && collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<HealthController>().Damage(BulletDamage);
-            collision.gameObject.GetComponent<EnemyController>().Ani.TriggerOnDamage();
+            collision.gameObject.GetComponent<EnemyController>().HBAC.TriggerOnDamage();
+            collision.gameObject.GetComponent<EnemyController>().IsLocking = true;
             PlayBulletExplosion();
         }
         else if(BT == BulletType.Enemy_Bullet && collision.gameObject.CompareTag("Player"))

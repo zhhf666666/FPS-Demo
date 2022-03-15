@@ -51156,7 +51156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6285308375553434590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.2, y: 0, z: -2.3}
+  m_LocalPosition: {x: 20.94, y: 0, z: -3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8404942174607237159}
@@ -51342,9 +51342,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 300
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 300
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -51767,7 +51767,6 @@ MonoBehaviour:
   MaxHP: 300
   PHSlider: {fileID: 1711958105}
   HealthNum: {fileID: 258200860}
-  RobotExplosion: {fileID: 1884939572830390928, guid: e5fca6e17d11088499fae1023b483fec, type: 3}
   EC: {fileID: 0}
 --- !u!136 &3474614972091779215
 CapsuleCollider:
@@ -51796,12 +51795,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyAgent: {fileID: 3477196362629081419}
-  Player: {fileID: 0}
-  MinDistance: 5
-  Ani: {fileID: 640990545}
+  IsLiving: 1
   HC: {fileID: 3477196363543000415}
   LerpRatio: 0.05
   DeathTime: 1
+  RobotExplosion: {fileID: 1884939572830390928, guid: e5fca6e17d11088499fae1023b483fec, type: 3}
+  HBAC: {fileID: 640990545}
+  IsLocking: 0
 --- !u!195 &3477196362629081419
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -51812,7 +51812,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -51836,11 +51836,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960039530b86e5747ad6256438de04e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
-  MaxHP: 100
+  HP: 300
+  MaxHP: 300
   PHSlider: {fileID: 1216505049364909039}
   HealthNum: {fileID: 0}
-  RobotExplosion: {fileID: 1884939572830390928, guid: e5fca6e17d11088499fae1023b483fec, type: 3}
   EC: {fileID: 3477196362629081416}
 --- !u!1 &3566065445351700359
 GameObject:
@@ -52039,13 +52038,32 @@ GameObject:
   - component: {fileID: 9155209757411692650}
   - component: {fileID: 3477196363543000415}
   - component: {fileID: 640990545}
+  - component: {fileID: 6285308375553434591}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyBomb
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6285308375553434591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285308375553434590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c29c87ab7c11674698512dc7064b439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EC: {fileID: 3477196362629081416}
+  BombDamage: 100
+  Player: {fileID: 0}
+  MinDistance: 6
+  MinBombDistance: 0.6
+  Explosion: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647, type: 3}
 --- !u!33 &6506387020809465183
 MeshFilter:
   m_ObjectHideFlags: 0
