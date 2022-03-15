@@ -6,7 +6,6 @@ public class HoverBotAnimatorController : MonoBehaviour
 {
     public float MoveSpeed;
     public bool Alerted;
-    public bool Death;
     public Animator HoverBotAnimator;
     void Start()
     {
@@ -19,7 +18,6 @@ public class HoverBotAnimatorController : MonoBehaviour
             return;
         HoverBotAnimator.SetFloat("MoveSpeed", MoveSpeed);
         HoverBotAnimator.SetBool("Alerted", Alerted);
-        HoverBotAnimator.SetBool("Death", Death);
     }
 
     void Update()

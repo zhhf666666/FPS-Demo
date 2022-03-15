@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class HealthController : MonoBehaviour
 {
     public int HP = 100;
-    public int MaxPH = 300;
+    public int MaxHP = 300;
     public Slider PHSlider;
     public Text HealthNum;
     public GameObject RobotExplosion;
+    public EnemyController EC;
 
     void Start()
     {
@@ -33,7 +34,11 @@ public class HealthController : MonoBehaviour
         {
             // Death
             PHSlider.value = 0;
-            PlayRobotExplosion();   
+            PlayRobotExplosion();
+            if(EC)
+            {
+                EC.Death();
+            }
         }
         SetText();
     }
@@ -49,6 +54,14 @@ public class HealthController : MonoBehaviour
 
     private void SetText()
     {
+        if(HealthNum == null)
+            return;
         HealthNum.text = "HP: " + HP.ToString();
+    }
+
+    public void Reset()
+    {
+        HP = MaxHP;
+        SetText();
     }
 }

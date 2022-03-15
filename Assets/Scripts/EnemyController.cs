@@ -9,17 +9,20 @@ public class EnemyController : MonoBehaviour
     public GameObject Player;
     public float MinDistance = 5;
     public HoverBotAnimatorController Ani;
+    private bool IsLiving = true;
+    public HealthController HC;
+    public float LerpRatio = 0.1f;
+    public float DeathTime = 1;
 
     void Start()
     {
-        EnemyAgent = this.GetComponent<NavMeshAgent>();
-        Ani = this.GetComponent<HoverBotAnimatorController>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        EnemyAgent.destination = this.transform.position;
     }
 
     void Update()
     {
+        if(!IsLiving)
+            return;
         if(CheckDistance())
         {
             EnemyAgent.destination = Player.transform.position;
@@ -49,4 +52,29 @@ public class EnemyController : MonoBehaviour
             return false;
     }
 
+    public void Birth()
+    {
+        IsLiving = true;
+        EnemyAgent.enabled = true;
+        HC.Reset();
+    }
+
+    public void Death()
+    {
+        IsLiving = false;
+        EnemyAgent.enabled = false;
+        StartCoroutine("DeathAnimation");
+    }
+
+    IEnumerator DeathAnimation()
+    {
+        while(this.transform.localEulerAngles.x < 89)
+        {
+            float angle = Mathf.Lerp(this.transform.localEulerAngles.x, 90, LerpRatio);
+            this.transform.localEulerAngles = new Vector3(angle, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z);
+            yield return null;
+        }
+        yield return new WaitForSeconds(DeathTime);
+        this.transform.position = new Vector3(0, -100, 0);
+    }
 }
