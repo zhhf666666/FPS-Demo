@@ -13,10 +13,11 @@ public class BulletController : MonoBehaviour
     public BulletType BT = BulletType.Player_Bullet;
     public int BulletDamage = 10;
     public GameObject BulletExplosion;
+    public GameObject Player;
 
     void Start()
     {
-        
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -31,21 +32,21 @@ public class BulletController : MonoBehaviour
             collision.gameObject.GetComponent<HealthController>().Damage(BulletDamage);
             collision.gameObject.GetComponent<EnemyController>().HBAC.TriggerOnDamage();
             collision.gameObject.GetComponent<EnemyController>().IsLocking = true;
-            PlayBulletExplosion();
+            PlayBulletExplosion(this.transform.position);
         }
         else if(BT == BulletType.Enemy_Bullet && collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<HealthController>().Damage(BulletDamage);
-            PlayBulletExplosion();
+            PlayBulletExplosion(Player.transform.position);
         }
         Destroy(gameObject);
     }
 
-    private void PlayBulletExplosion()
+    private void PlayBulletExplosion(Vector3 pos)
     {
         if(BulletExplosion)
         {
-            GameObject NewExplosion = Instantiate(BulletExplosion, this.transform.position, BulletExplosion.transform.rotation);
+            GameObject NewExplosion = Instantiate(BulletExplosion, pos, BulletExplosion.transform.rotation);
             Destroy(NewExplosion, 2);
         }
     }

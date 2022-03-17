@@ -13,15 +13,32 @@ public class EnemyController : MonoBehaviour
     public GameObject RobotExplosion;
     public HoverBotAnimatorController HBAC;
     public bool IsLocking = false;
+    public float MinDistance = 6;
+    public GameObject Player;
+    public int BombDamage = 100;
+    public float MinBombDistance = 0.6f;
+    public GameObject Explosion; 
 
     void Start()
     {
-    
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
     {
-        
+        if(!IsLiving)
+            return;
+        if(CheckDistance(MinDistance))
+            IsLocking = true;
+        CheckBomb();
+    }
+
+    public bool CheckDistance(float dis)
+    {
+        if(Vector3.Distance(EnemyAgent.transform.position, Player.transform.position) < dis)
+            return true;
+        else
+            return false;
     }
 
     public void RandomNavigation()
@@ -30,6 +47,14 @@ public class EnemyController : MonoBehaviour
         {
             EnemyAgent.destination = new Vector3(Random.Range(-30f, 30f), 0, Random.Range(-30f, 30f));
         }
+        HBAC.Alerted = false;
+    }
+
+    public void TrackPlayer()
+    {
+        EnemyAgent.destination = Player.transform.position;
+        HBAC.Alerted = true;
+        HBAC.MoveSpeed = EnemyAgent.speed;
     }
 
     public void Birth()
@@ -64,6 +89,18 @@ public class EnemyController : MonoBehaviour
         if(RobotExplosion)
         {
             GameObject NewExplosion = Instantiate(RobotExplosion, this.transform.position, RobotExplosion.transform.rotation);
+            Destroy(NewExplosion, 2);
+        }
+    }
+
+    private void CheckBomb()
+    {
+        if(CheckDistance(MinBombDistance))
+        {
+            Death();
+            GameObject NewExplosion = Instantiate(Explosion, this.transform.position, Explosion.transform.rotation);
+            Player.GetComponent<HealthController>().Damage(BombDamage);
+            HC.Damage(HC.HP);
             Destroy(NewExplosion, 2);
         }
     }
