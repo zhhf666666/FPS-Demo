@@ -17,7 +17,8 @@ public class EnemyController : MonoBehaviour
     public GameObject Player;
     public int BombDamage = 100;
     public float MinBombDistance = 0.6f;
-    public GameObject Explosion; 
+    public GameObject Explosion;
+    public GameObject Exclamation;
 
     void Start()
     {
@@ -29,8 +30,30 @@ public class EnemyController : MonoBehaviour
         if(!IsLiving)
             return;
         if(CheckDistance(MinDistance))
-            IsLocking = true;
+        {
+            SetIsLockingTrue();
+        }
         CheckBomb();
+    }
+
+    public void SetIsLockingTrue()
+    {
+        if(IsLocking == true)
+            return;
+        IsLocking = true;
+        GameObject exclamation = Instantiate(Exclamation, this.transform.position + Vector3.up, Exclamation.transform.rotation);
+        exclamation.GetComponent<ParticleSystem>().Play();
+        StartCoroutine("ParticleAnimation", exclamation);
+        Destroy(exclamation,1);
+    }
+
+    IEnumerator ParticleAnimation(GameObject particle)
+    {
+        while(particle)
+        {
+            particle.transform.position = this.transform.position + Vector3.up;
+            yield return null;
+        }
     }
 
     public bool CheckDistance(float dis)
@@ -64,12 +87,15 @@ public class EnemyController : MonoBehaviour
         HC.Reset();
     }
 
-    public void Death()
+    public void Death(bool IsBomb)
     {
         IsLiving = false;
         EnemyAgent.enabled = false;
         PlayRobotExplosion();
-        StartCoroutine("DeathAnimation");
+        if(!IsBomb)
+            StartCoroutine("DeathAnimation");
+        else
+            this.transform.position = new Vector3(0, -100, 0);
     }
 
     IEnumerator DeathAnimation()
@@ -97,10 +123,10 @@ public class EnemyController : MonoBehaviour
     {
         if(CheckDistance(MinBombDistance))
         {
-            Death();
+            Death(true);
             GameObject NewExplosion = Instantiate(Explosion, this.transform.position, Explosion.transform.rotation);
             Player.GetComponent<HealthController>().Damage(BombDamage);
-            HC.Damage(HC.HP);
+            //HC.Damage(HC.HP);
             Destroy(NewExplosion, 2);
         }
     }

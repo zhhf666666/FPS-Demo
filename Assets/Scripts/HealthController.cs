@@ -35,7 +35,7 @@ public class HealthController : MonoBehaviour
             PHSlider.value = 0;
             if(EC)
             {
-                EC.Death();
+                EC.Death(false);
             }
         }
         SetText();

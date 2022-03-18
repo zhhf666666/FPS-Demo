@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPistol : MonoBehaviour
+public class EnemyGun : MonoBehaviour
 {
     public EnemyController EC;
-    public int BulletDamage = 20;
     public float FireIntervalTime = 0.3f;
     public float AlertAngle = 10;
     public GameObject Player;
@@ -34,7 +33,7 @@ public class EnemyPistol : MonoBehaviour
             BulletDirection.Normalize();
             if(RayFunc(BulletDirection))
             {
-                EC.IsLocking = true;
+                EC.SetIsLockingTrue();
                 StartCoroutine("OpenFire", BulletDirection);
             }
         }
@@ -43,7 +42,6 @@ public class EnemyPistol : MonoBehaviour
             if(EC.IsLocking)
             {
                 EC.TrackPlayer();
-                //EC.EnemyAgent.stoppingDistance = 2;
             }
             else
             {
