@@ -9,7 +9,7 @@ public class BeginningController : MonoBehaviour
     public GameObject Player;
     public GameObject BeginningCanvas;
     public GameObject GameCanvas;
-
+    public GameManager GM;
 
     void Start()
     {
@@ -38,6 +38,7 @@ public class BeginningController : MonoBehaviour
         Player.transform.position = new Vector3(-29, 0, -29);
         Player.transform.localEulerAngles = new Vector3(0, 45, 0);
         Player.SetActive(true);
+        GM.Init();
     }
 }
 

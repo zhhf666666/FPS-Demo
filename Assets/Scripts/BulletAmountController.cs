@@ -13,7 +13,7 @@ public class BulletAmountController : MonoBehaviour
     void Awake()
     {
         Current = Max;
-        Total = Max * 2;
+        Total = Max * 3;
     }
     
     void Start()

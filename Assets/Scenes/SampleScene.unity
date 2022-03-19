@@ -9562,6 +9562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374701054}
+  - component: {fileID: 374701055}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -9583,6 +9584,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &374701055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374701053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aebc72178d97d5448b49119030f810d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameLevel: 1
+  Player: {fileID: 972153533}
+  EnemyBomb: []
+  EnemyPistol: []
+  EnemyRifle: []
+  EnemyBombPre: {fileID: 3486779911123095557, guid: 545a56e26a13b4e449184b90ad22a2ec, type: 3}
+  EnemyPistolPre: {fileID: 7241065041035718618, guid: d303fcd4f6b502f4ab93035fc873dd32, type: 3}
+  EnemyRiflePre: {fileID: 2813108493607801674, guid: a5ab15e3fb88f634d9ef21a5926b009e, type: 3}
 --- !u!1 &384390318
 GameObject:
   m_ObjectHideFlags: 0
@@ -38313,6 +38334,7 @@ MonoBehaviour:
   Player: {fileID: 972153533}
   BeginningCanvas: {fileID: 1216911900}
   GameCanvas: {fileID: 925734813}
+  GM: {fileID: 374701055}
 --- !u!81 &1702109230
 AudioListener:
   m_ObjectHideFlags: 0

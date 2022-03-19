@@ -19,8 +19,9 @@ public class EnemyController : MonoBehaviour
     public float MinBombDistance = 0.6f;
     public GameObject Explosion;
     public GameObject Exclamation;
+    public float InitDistanceFromPlayer = 10;
 
-    void Start()
+    void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -64,6 +65,14 @@ public class EnemyController : MonoBehaviour
             return false;
     }
 
+    public bool CheckDistance(float dis, Vector3 vec)
+    {
+        if(Vector3.Distance(vec, Player.transform.position) < dis)
+            return true;
+        else
+            return false;
+    }
+
     public void RandomNavigation()
     {
         if(!EnemyAgent.pathPending && EnemyAgent.remainingDistance < 0.5f)
@@ -84,6 +93,7 @@ public class EnemyController : MonoBehaviour
     {
         IsLiving = true;
         EnemyAgent.enabled = true;
+        SetRandomPos();
         HC.Reset();
     }
 
@@ -96,6 +106,18 @@ public class EnemyController : MonoBehaviour
             StartCoroutine("DeathAnimation");
         else
             this.transform.position = new Vector3(0, -100, 0);
+    }
+
+    public void SetRandomPos()
+    {
+        Vector3 temp;
+        while(true)
+        {
+            temp = new Vector3(Random.Range(-29f, 29f), 0, Random.Range(-29f, 29f));
+            if(!CheckDistance(InitDistanceFromPlayer, temp))
+                break;
+        }
+        this.transform.position = temp;
     }
 
     IEnumerator DeathAnimation()
