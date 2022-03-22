@@ -17,18 +17,17 @@ public class PlayerController : MonoBehaviour
     public Transform CheckPoint;
     public float magrin = 0.1f;
     public float JumpSpeed = 5.0f;
-    //public HoverBotAnimatorController AnimatorController;
+    public bool IsLiving = true;
 
     void Start()
     {
         CC = this.GetComponent<CharacterController>();
-        //AnimatorController = this.GetComponent<HoverBotAnimatorController>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     void Update()
     {
+        if(!IsLiving)
+            return;
         PlayerRotateControl();
         PlayerMove();
     }
@@ -87,19 +86,18 @@ public class PlayerController : MonoBehaviour
         MoveValue += Vector3.down * FallVelocity * Time.deltaTime;
 
         CC.Move(MoveValue);
+    }
 
-        /*
-        // Animator
-        if(MoveValue != Vector3.zero)
-        {
-            AnimatorController.MoveSpeed = MoveValue.magnitude / Time.deltaTime;
-            AnimatorController.Alerted = true;
-        }
-        else
-        {
-            AnimatorController.MoveSpeed = 0;
-            AnimatorController.Alerted = false;
-        }
-        */
+    public void Birth()
+    {
+        this.transform.position = new Vector3(-29, 0, -29);
+        this.transform.localEulerAngles = new Vector3(0, 45, 0);
+        IsLiving = true;
+        this.GetComponent<HealthController>().Reset();
+    }
+    
+    public void Death()
+    {
+        int i;
     }
 }

@@ -10,6 +10,7 @@ public class HealthController : MonoBehaviour
     public Slider PHSlider;
     public Text HealthNum;
     public EnemyController EC;
+    public PlayerController PC;
 
     void Start()
     {
@@ -24,6 +25,8 @@ public class HealthController : MonoBehaviour
 
     public void Damage(int damage)
     {
+        if(HP == 0)
+            return;
         HP -= damage;
         if(HP > 0)
         {
@@ -32,10 +35,15 @@ public class HealthController : MonoBehaviour
         if(HP <= 0)
         {
             // Death
+            HP = 0;
             PHSlider.value = 0;
             if(EC)
             {
                 EC.Death(false);
+            }
+            else if(PC)
+            {
+                PC.Death();
             }
         }
         SetText();
@@ -50,7 +58,10 @@ public class HealthController : MonoBehaviour
 
     public void Reset()
     {
-        HP = MaxHP;
+        if(EC)
+            HP = MaxHP;
+        else if(PC)
+            HP = 100;
         SetText();
     }
 }

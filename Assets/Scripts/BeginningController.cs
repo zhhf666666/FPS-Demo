@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BeginningController : MonoBehaviour
 {
     public float RotateSpeed = 180;
-    public GameObject Player;
-    public GameObject BeginningCanvas;
-    public GameObject GameCanvas;
-    public GameManager GM;
 
     void Start()
     {
@@ -32,13 +29,7 @@ public class BeginningController : MonoBehaviour
 
     public void StartGame()
     {
-        this.gameObject.SetActive(false);
-        BeginningCanvas.SetActive(false);
-        GameCanvas.SetActive(true);
-        Player.transform.position = new Vector3(-29, 0, -29);
-        Player.transform.localEulerAngles = new Vector3(0, 45, 0);
-        Player.SetActive(true);
-        GM.Init();
+        SceneManager.LoadScene("SampleScene");
     }
 }
 

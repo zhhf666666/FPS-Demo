@@ -45,7 +45,8 @@ public class BulletAmountController : MonoBehaviour
             Current += Total;
             Total = 0;
         }
-        SetText();
+        if(this.transform.localPosition.y > -10)
+            SetText();
     }
 
     public bool CheckCurrent()

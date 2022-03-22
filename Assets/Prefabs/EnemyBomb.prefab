@@ -1042,6 +1042,7 @@ MonoBehaviour:
   Explosion: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647, type: 3}
   Exclamation: {fileID: 8855434715677272936, guid: 1bc9e4f49c67a6a41af3e7cb3d30bb43, type: 3}
   InitDistanceFromPlayer: 10
+  GM: {fileID: 0}
 --- !u!136 &1754072566867518385
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1073,6 +1074,7 @@ MonoBehaviour:
   PHSlider: {fileID: 8627636390417332276}
   HealthNum: {fileID: 0}
   EC: {fileID: 6276640035183450771}
+  PC: {fileID: 0}
 --- !u!114 &7447372069603839626
 MonoBehaviour:
   m_ObjectHideFlags: 0

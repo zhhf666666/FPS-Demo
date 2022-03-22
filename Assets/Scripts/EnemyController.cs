@@ -20,10 +20,19 @@ public class EnemyController : MonoBehaviour
     public GameObject Explosion;
     public GameObject Exclamation;
     public float InitDistanceFromPlayer = 10;
+    public GameManager GM;
 
     void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+    }
+
+    void Start()
+    {
+        IsLiving = false;
+        EnemyAgent.enabled = false;
+        IsLocking = false;
     }
 
     void Update()
@@ -91,9 +100,10 @@ public class EnemyController : MonoBehaviour
 
     public void Birth()
     {
-        IsLiving = true;
-        EnemyAgent.enabled = true;
         SetRandomPos();
+        EnemyAgent.enabled = true;
+        IsLiving = true;
+        IsLocking = false;
         HC.Reset();
     }
 
@@ -101,6 +111,7 @@ public class EnemyController : MonoBehaviour
     {
         IsLiving = false;
         EnemyAgent.enabled = false;
+        GM.DecreaseEnemy();
         PlayRobotExplosion();
         if(!IsBomb)
             StartCoroutine("DeathAnimation");
