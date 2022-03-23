@@ -62,6 +62,7 @@ public class HealthController : MonoBehaviour
             HP = MaxHP;
         else if(PC)
             HP = 100;
+        PHSlider.value = HP;
         SetText();
     }
 }

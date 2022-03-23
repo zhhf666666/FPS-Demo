@@ -26,13 +26,14 @@ public class EnemyController : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        IsLiving = false;
+        EnemyAgent.enabled = false;
+        IsLocking = false;
     }
 
     void Start()
     {
-        IsLiving = false;
-        EnemyAgent.enabled = false;
-        IsLocking = false;
+        
     }
 
     void Update()

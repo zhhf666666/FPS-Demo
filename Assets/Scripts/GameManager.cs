@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public Text LivingEnemyText;
     public Text AlertText;
     public int AlertTime = 3;
-    private bool IsUsingAlert = false;
     public int LevelInterval = 10;
 
     void Start()
@@ -104,23 +103,19 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DisplayAlert(string s)
     {
-        while(IsUsingAlert)
-        {
-            yield return null;
-        }
-        IsUsingAlert = true;
         AlertText.text = s;
         yield return new WaitForSeconds(AlertTime);
         AlertText.text = "";
-        IsUsingAlert = false;
     }
 
     IEnumerator UpdateLevelAlert()
     {
         string content = "10秒后敌人将再度来袭！";
+        StopCoroutine("DisplayAlert");
         StartCoroutine("DisplayAlert", content);
         yield return new WaitForSeconds(LevelInterval);
-        content = "敌人来袭！"
+        content = "敌人来袭！";
+        StopCoroutine("DisplayAlert");
         StartCoroutine("DisplayAlert", content);
         ActivateEnemy();
         LivingEnemy = GameLevel + 4;
@@ -132,17 +127,17 @@ public class GameManager : MonoBehaviour
         int ans = GameLevel % 3;
         if(ans == 0)
         {
-            GameObject temp = Instantiate(EnemyBombPre, this.transform);
+            GameObject temp = Instantiate(EnemyBombPre, new Vector3(0, 0, 0), this.transform.rotation, this.transform);
             EnemyBomb.Add(temp);
         }
         else if(ans == 1)
         {
-            GameObject temp = Instantiate(EnemyPistolPre, this.transform);
+            GameObject temp = Instantiate(EnemyPistolPre, new Vector3(0, 0, 0), this.transform.rotation, this.transform);
             EnemyPistol.Add(temp);
         }
         else if(ans == 2)
         {
-            GameObject temp = Instantiate(EnemyRiflePre, this.transform);
+            GameObject temp = Instantiate(EnemyRiflePre, new Vector3(0, 0, 0), this.transform.rotation, this.transform);
             EnemyRifle.Add(temp);
         }
     }
