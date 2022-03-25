@@ -7,9 +7,12 @@ public class HoverBotAnimatorController : MonoBehaviour
     public float MoveSpeed;
     public bool Alerted;
     public Animator HoverBotAnimator;
+    public GameManager GM;
+
     void Start()
     {
         HoverBotAnimator = this.GetComponentInChildren<Animator>();
+        GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     private void SetParameters()
@@ -22,6 +25,8 @@ public class HoverBotAnimatorController : MonoBehaviour
 
     void Update()
     {
+        if(GM.IsPause)
+            return;
         SetParameters();
     }
 

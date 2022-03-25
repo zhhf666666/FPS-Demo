@@ -25,7 +25,7 @@ public class EnemyGun : MonoBehaviour
 
     void Update()
     {
-        if(!EC.IsLiving)
+        if(!EC.IsLiving || EC.GM.IsPause)
             return;
         if(AllowFire && CheckView())
         {

@@ -8,7 +8,7 @@ public class EnemyBomb : MonoBehaviour
 
     void Update()
     {
-        if(!EC.IsLiving)
+        if(!EC.IsLiving || EC.GM.IsPause)
             return;
         if(EC.IsLocking)
         {

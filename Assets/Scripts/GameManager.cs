@@ -19,11 +19,12 @@ public class GameManager : MonoBehaviour
     public Text AlertText;
     public int AlertTime = 3;
     public int LevelInterval = 10;
+    public bool IsPause = false;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.visible = false;
         Init();
         SetText();
     }

@@ -11,14 +11,18 @@ public class EyeCameraController : MonoBehaviour
     public float DefaultView = 60;
     public float CenterView = 30;
     public float LerpRatio = 0.2f;
+    public GameManager GM;
 
     void Start()
     {
+        GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         WeaponCameraCenterPos = new Vector3(0, 0.058f, -0.01f);   // Pistol
     }
 
     void Update()
     {
+        if(GM.IsPause)
+            return;
         ViewChange();
     }
 

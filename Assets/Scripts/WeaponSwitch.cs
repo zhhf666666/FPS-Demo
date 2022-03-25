@@ -13,15 +13,19 @@ public class WeaponSwitch : MonoBehaviour
     public Vector3[] CameraCenterParameter;
     public bool CanFire = true;
     public Image[] Icons;
+    public GameManager GM;
 
     void Start()
     {
         Icons[0].color = new Color32(255, 255, 255, 255);
         Icons[1].color = new Color32(152, 152, 152, 255);
+        GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     void Update()
     {
+        if(GM.IsPause)
+            return;
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             if(Current != 0)

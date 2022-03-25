@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if(!IsLiving)
+        if(!IsLiving || GM.IsPause)
             return;
         if(CheckDistance(MinDistance))
         {

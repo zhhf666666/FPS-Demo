@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,16 +18,20 @@ public class PlayerController : MonoBehaviour
     public Transform CheckPoint;
     public float magrin = 0.1f;
     public float JumpSpeed = 5.0f;
-    public bool IsLiving = true;
+    public GameManager GM;
+    public Image GameOverImage;
+    public float LerpRatio = 0.4f;
+    public GameObject OverCanvas;
 
     void Start()
     {
         CC = this.GetComponent<CharacterController>();
+        GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     void Update()
     {
-        if(!IsLiving)
+        if(GM.IsPause)
             return;
         PlayerRotateControl();
         PlayerMove();
@@ -92,12 +97,26 @@ public class PlayerController : MonoBehaviour
     {
         this.transform.position = new Vector3(-29, 0, -29);
         this.transform.localEulerAngles = new Vector3(0, 45, 0);
-        IsLiving = true;
         this.GetComponent<HealthController>().Reset();
     }
     
     public void Death()
     {
-        int i;
+        
+        GM.IsPause = true;
+        StartCoroutine("GameOverUI");
+    }
+
+    IEnumerator GameOverUI()
+    {
+        OverCanvas.SetActive(true);
+        while(GameOverImage.color.a < 0.99f)
+        {
+            float temp = Mathf.Lerp(GameOverImage.color.a, 1, LerpRatio);
+            GameOverImage.color = new Color(GameOverImage.color.r, GameOverImage.color.g, GameOverImage.color.b, temp);
+            yield return null;
+        }
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

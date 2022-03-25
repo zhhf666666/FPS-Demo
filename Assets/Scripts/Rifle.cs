@@ -35,6 +35,8 @@ public class Rifle : MonoBehaviour
 
     void Update()
     {
+        if(WS.GM.IsPause)
+            return;
         if(WS.Current == 1 && WS.CanFire == true)
         {
             OpenFire();
