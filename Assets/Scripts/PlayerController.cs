@@ -102,13 +102,13 @@ public class PlayerController : MonoBehaviour
     
     public void Death()
     {
-        
-        GM.IsPause = true;
         StartCoroutine("GameOverUI");
     }
 
     IEnumerator GameOverUI()
     {
+        yield return new WaitForSeconds(0.3f);
+        GM.IsPause = true;
         OverCanvas.SetActive(true);
         while(GameOverImage.color.a < 0.99f)
         {

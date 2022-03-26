@@ -20,11 +20,12 @@ public class GameManager : MonoBehaviour
     public int AlertTime = 3;
     public int LevelInterval = 10;
     public bool IsPause = false;
+    public GameObject PickUpHealth;
+    public GameObject PickUpBullet;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
         Init();
         SetText();
     }
@@ -111,9 +112,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator UpdateLevelAlert()
     {
-        string content = "10秒后敌人将再度来袭！";
+        string content = "补给品已到达，10秒后敌人将再度来袭！";
         StopCoroutine("DisplayAlert");
         StartCoroutine("DisplayAlert", content);
+        InitPickUp();
         yield return new WaitForSeconds(LevelInterval);
         content = "敌人来袭！";
         StopCoroutine("DisplayAlert");
@@ -121,6 +123,14 @@ public class GameManager : MonoBehaviour
         ActivateEnemy();
         LivingEnemy = GameLevel + 4;
         SetText();
+    }
+
+    public void InitPickUp()
+    {
+        Vector3 pos = new Vector3(Random.Range(-29f, 29f), 0, Random.Range(-29f, 29f));
+        Instantiate(PickUpHealth, pos, this.transform.rotation);
+        pos = new Vector3(Random.Range(-29f, 29f), 0, Random.Range(-29f, 29f));
+        Instantiate(PickUpBullet, pos, this.transform.rotation);
     }
 
     public void IncreaseEnemy()
@@ -143,5 +153,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GetHealth()
+    {
+        int HP = Random.Range(8 * (GameLevel + 4), 12 * (GameLevel + 4));
+        Player.GetComponent<HealthController>().GetHP(HP);
+        string message = "获得" + HP.ToString() + "点生命值";
+        StartCoroutine("DisplayAlert", message);
+    }
 
+    public void GetBullet()
+    {
+        int PistolBullet = Random.Range(2 * (GameLevel + 4), 4 * (GameLevel + 4));
+        int RifleBullet = Random.Range(5 * (GameLevel + 4), 7 * (GameLevel + 4));
+        var WeaponBulletController = Player.GetComponentsInChildren<BulletAmountController>();
+        for(int i=0;i<WeaponBulletController.Length;i++)
+        {
+            if(WeaponBulletController[i].transform.name == "Pistol")
+            {
+                WeaponBulletController[i].AddBullet(PistolBullet);
+            }
+            else if(WeaponBulletController[i].transform.name == "Rifle")
+            {
+                WeaponBulletController[i].AddBullet(RifleBullet);
+            }
+        }
+        string message = "获得" + PistolBullet.ToString() + "发手枪子弹和" + RifleBullet.ToString() + "发步枪子弹";
+        StartCoroutine("DisplayAlert", message);
+    }
 }

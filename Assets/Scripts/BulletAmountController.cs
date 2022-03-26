@@ -28,7 +28,8 @@ public class BulletAmountController : MonoBehaviour
 
     public void SetText()
     {
-        BulletAmount.text = Current.ToString() + '/' + Total.ToString();
+        if(this.transform.localPosition.y > -10)
+            BulletAmount.text = Current.ToString() + '/' + Total.ToString();
     }
 
     public void Reload()
@@ -45,8 +46,7 @@ public class BulletAmountController : MonoBehaviour
             Current += Total;
             Total = 0;
         }
-        if(this.transform.localPosition.y > -10)
-            SetText();
+        SetText();
     }
 
     public bool CheckCurrent()
@@ -73,7 +73,7 @@ public class BulletAmountController : MonoBehaviour
         SetText();
     }
 
-    public void Add(int num)
+    public void AddBullet(int num)
     {
         Total += num;
         SetText();

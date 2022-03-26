@@ -9517,6 +9517,8 @@ MonoBehaviour:
   AlertTime: 3
   LevelInterval: 10
   IsPause: 0
+  PickUpHealth: {fileID: 2000712782203553333, guid: 0e13f5d199151024bb13613000886c82, type: 3}
+  PickUpBullet: {fileID: 5305963409002595105, guid: 29ca9502b5acbfd4cb4d37d9a44804ff, type: 3}
 --- !u!1 &384390318
 GameObject:
   m_ObjectHideFlags: 0
@@ -55699,7 +55701,7 @@ MonoBehaviour:
   JumpSpeed: 5
   GM: {fileID: 0}
   GameOverImage: {fileID: 1810190703}
-  LerpRatio: 0.01
+  LerpRatio: 0.05
   OverCanvas: {fileID: 2023941742}
 --- !u!114 &8460168512597325356
 MonoBehaviour:
