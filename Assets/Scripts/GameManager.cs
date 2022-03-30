@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public bool IsPause = false;
     public GameObject PickUpHealth;
     public GameObject PickUpBullet;
+    public AudioSource PickUpHealthAudio;
+    public AudioSource PickUpBulletAudio;
+    public AudioSource VictoryAudio;
 
     void Start()
     {
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
         GameLevel++;
         SetText();
         StartCoroutine("UpdateLevelAlert");
+        StartCoroutine("PlayVictoryAudio");
         IncreaseEnemy();
     }
 
@@ -101,6 +105,13 @@ public class GameManager : MonoBehaviour
         {
             EnemyRifle[i].GetComponent<EnemyController>().Birth();
         }
+    }
+
+    IEnumerator PlayVictoryAudio()
+    {
+        VictoryAudio.Play();
+        yield return new WaitForSeconds(6.4f);
+        VictoryAudio.Stop();
     }
 
     IEnumerator DisplayAlert(string s)
@@ -179,5 +190,13 @@ public class GameManager : MonoBehaviour
         }
         string message = "获得" + PistolBullet.ToString() + "发手枪子弹和" + RifleBullet.ToString() + "发步枪子弹";
         StartCoroutine("DisplayAlert", message);
+    }
+
+    public void PlayPickUpAudio(int index)
+    {
+        if(index == 0)
+            PickUpHealthAudio.Play();
+        else if(index == 1)
+            PickUpBulletAudio.Play();
     }
 }

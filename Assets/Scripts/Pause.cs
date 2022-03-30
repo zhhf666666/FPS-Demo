@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour
 {
     public GameObject PauseCanvas;
     public GameManager GM;
+    public AudioSource PauseAudio;
 
     void Start()
     {
@@ -24,10 +25,18 @@ public class Pause : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseCanvas.SetActive(true);
-            GM.IsPause = true;
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
+            PauseAudio.Play();
+            if(GM.IsPause)
+            {
+                ReturnToGame();
+            }
+            else
+            {
+                PauseCanvas.SetActive(true);
+                GM.IsPause = true;
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
     }
 

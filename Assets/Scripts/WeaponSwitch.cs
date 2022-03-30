@@ -63,6 +63,10 @@ public class WeaponSwitch : MonoBehaviour
         Icons[Next].color = new Color32(255, 255, 255, 255);
         ECC.WeaponCameraCenterPos = CameraCenterParameter[Next];
         Weapons[Current].transform.localPosition = new Vector3(0, -100, 0);
+        if(Current == 0)
+            Weapons[Current].GetComponent<Pistol>().Interrupt();
+        else
+            Weapons[Current].GetComponent<Rifle>().Interrupt();
         StartCoroutine("RotateWeapon", Next);
         Weapons[Next].GetComponent<BulletAmountController>().SetText();
         Current = Next;

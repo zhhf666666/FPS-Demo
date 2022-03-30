@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     public GameObject Exclamation;
     public float InitDistanceFromPlayer = 10;
     public GameManager GM;
+    public AudioSource AlertAudio;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class EnemyController : MonoBehaviour
         if(IsLocking == true)
             return;
         IsLocking = true;
+        AlertAudio.Play();
         GameObject exclamation = Instantiate(Exclamation, this.transform.position + Vector3.up, Exclamation.transform.rotation);
         exclamation.GetComponent<ParticleSystem>().Play();
         StartCoroutine("ParticleAnimation", exclamation);
@@ -113,9 +115,11 @@ public class EnemyController : MonoBehaviour
         IsLiving = false;
         EnemyAgent.enabled = false;
         GM.DecreaseEnemy();
-        PlayRobotExplosion();
         if(!IsBomb)
+        {
+            PlayRobotExplosion();
             StartCoroutine("DeathAnimation");
+        }
         else
             this.transform.position = new Vector3(0, -100, 0);
     }
@@ -157,10 +161,9 @@ public class EnemyController : MonoBehaviour
     {
         if(CheckDistance(MinBombDistance))
         {
+            GameObject NewExplosion = Instantiate(Explosion, this.transform.position + Vector3.up * 0.5f, Explosion.transform.rotation);    
             Death(true);
-            GameObject NewExplosion = Instantiate(Explosion, this.transform.position, Explosion.transform.rotation);
             Player.GetComponent<HealthController>().Damage(BombDamage);
-            //HC.Damage(HC.HP);
             Destroy(NewExplosion, 2);
         }
     }

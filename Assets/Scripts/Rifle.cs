@@ -27,6 +27,7 @@ public class Rifle : MonoBehaviour
     public BulletAmountController BAC;
     private bool IsFire = false;
     public WeaponSwitch WS;
+    public AudioSource ReloadAuido;
 
     void Start()
     {
@@ -170,6 +171,7 @@ public class Rifle : MonoBehaviour
     IEnumerator Reload()
     {
         IsReloading = true;
+        ReloadAuido.Play();
         IsReloadingUp = 4;
         while(IsReloadingUp != 0)
         {
@@ -232,6 +234,21 @@ public class Rifle : MonoBehaviour
             yield return null;
         }
         IsReloading = false;
+        ReloadAuido.Stop();
         BAC.Reload();
+    }
+
+    public void Interrupt()
+    {
+        if(IsReloading)
+        {
+            StopCoroutine("Reload");
+            ReloadObject[0].localPosition = new Vector3(-0.076f, 0.4f, ReloadObject[0].localPosition.z);
+            ReloadObject[1].localPosition = new Vector3(-0.076f, 0.4f, ReloadObject[1].localPosition.z);
+            ReloadObject[2].localPosition = new Vector3(0.076f, 0.4f, ReloadObject[2].localPosition.z);
+            ReloadObject[3].localPosition = new Vector3(0.076f, 0.4f, ReloadObject[3].localPosition.z);
+            IsReloading = false;
+            ReloadAuido.Stop();
+        }
     }
 }

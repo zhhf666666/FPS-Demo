@@ -25,6 +25,7 @@ public class PickUpBullet : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             GM.GetBullet();
+            GM.PlayPickUpAudio(1);
             Destroy(this.gameObject);
         }
     }

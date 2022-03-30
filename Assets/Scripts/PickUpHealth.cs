@@ -24,6 +24,7 @@ public class PickUpHealth : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             GM.GetHealth();
+            GM.PlayPickUpAudio(0);
             Destroy(this.gameObject);
         }
     }

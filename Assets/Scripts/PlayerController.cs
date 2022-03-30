@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     public Image GameOverImage;
     public float LerpRatio = 0.4f;
     public GameObject OverCanvas;
+    public bool IsJump = false;
+    public AudioSource JumpAudio;
+    public AudioSource LandAudio;
 
     void Start()
     {
@@ -82,10 +85,17 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if(IsJump == true)
+            {
+                IsJump = false;
+                LandAudio.Play();
+            }
             FallVelocity = 0;
             if(Input.GetButtonDown("Jump"))
             {
                 FallVelocity = -JumpSpeed;
+                IsJump = true;
+                JumpAudio.Play();
             }
         }
         MoveValue += Vector3.down * FallVelocity * Time.deltaTime;
