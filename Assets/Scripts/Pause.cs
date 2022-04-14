@@ -35,6 +35,8 @@ public class Pause : MonoBehaviour
                 PauseCanvas.SetActive(true);
                 GM.IsPause = true;
                 Time.timeScale = 0;
+                foreach(AudioSource temp in GM.AudioList)
+                    temp.Pause();
                 Cursor.lockState = CursorLockMode.None;
             }
         }
@@ -51,6 +53,8 @@ public class Pause : MonoBehaviour
         PauseCanvas.SetActive(false);
         GM.IsPause = false;
         Time.timeScale = 1;
+        foreach(AudioSource temp in GM.AudioList)
+            temp.UnPause();
         Cursor.lockState = CursorLockMode.Locked;
     }
 

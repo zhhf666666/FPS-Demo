@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public AudioSource PickUpHealthAudio;
     public AudioSource PickUpBulletAudio;
     public AudioSource VictoryAudio;
+    public List<AudioSource> AudioList;
 
     void Start()
     {
@@ -110,8 +111,10 @@ public class GameManager : MonoBehaviour
     IEnumerator PlayVictoryAudio()
     {
         VictoryAudio.Play();
+        AudioList.Add(VictoryAudio);
         yield return new WaitForSeconds(6.4f);
         VictoryAudio.Stop();
+        AudioList.Remove(VictoryAudio);
     }
 
     IEnumerator DisplayAlert(string s)

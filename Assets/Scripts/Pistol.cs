@@ -27,7 +27,8 @@ public class Pistol : MonoBehaviour
     public float ReloadWaitTime = 1;
     public BulletAmountController BAC;
     public WeaponSwitch WS;
-    public AudioSource ReloadAuido;
+    public AudioSource ReloadAudio;
+    public AudioSource CannotFireAudio;
 
     void Start()
     {
@@ -50,12 +51,13 @@ public class Pistol : MonoBehaviour
     private void OpenFire()
     {
         // Single Fire
-        if(!BAC.CheckCurrent())
-        {
-            return;
-        }
         if(Input.GetMouseButtonDown(0))
         {
+            if(!BAC.CheckCurrent())
+            {
+                CannotFireAudio.Play();
+                return;
+            }
             StartCoroutine("SingleFire");
         }
     }
@@ -161,7 +163,8 @@ public class Pistol : MonoBehaviour
     IEnumerator Reload()
     {
         IsReloading = true;
-        ReloadAuido.Play();
+        ReloadAudio.Play();
+        WS.GM.AudioList.Add(ReloadAudio);
         IsReloadingUp = 4;
         while(IsReloadingUp != 0)
         {
@@ -224,7 +227,8 @@ public class Pistol : MonoBehaviour
             yield return null;
         }
         IsReloading = false;
-        ReloadAuido.Stop();
+        ReloadAudio.Stop();
+        WS.GM.AudioList.Remove(ReloadAudio);
         BAC.Reload();
     }
 
@@ -238,7 +242,8 @@ public class Pistol : MonoBehaviour
             ReloadObject[2].localPosition = new Vector3(0.067f, 0.39f, ReloadObject[2].localPosition.z);
             ReloadObject[3].localPosition = new Vector3(0.067f, 0.39f, ReloadObject[3].localPosition.z);
             IsReloading = false;
-            ReloadAuido.Stop();
+            ReloadAudio.Stop();
+            WS.GM.AudioList.Remove(ReloadAudio);
         }
     }
 }
