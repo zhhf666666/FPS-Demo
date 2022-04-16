@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &255477851
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.06090688, b: 0, a: 1}
+  m_Color: {r: 0.83848643, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2104,7 +2104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1427914606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2891,6 +2891,8 @@ MonoBehaviour:
   MaxLevelRecord: {fileID: 1750468991}
   AlertText: {fileID: 982695233}
   AlertTime: 2
+  UserNameInput: {fileID: 1760389391}
+  PasswordInput: {fileID: 1261992262}
 --- !u!81 &1944505405
 AudioListener:
   m_ObjectHideFlags: 0

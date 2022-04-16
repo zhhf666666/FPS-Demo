@@ -85,7 +85,7 @@ public class ClientSocket
         }
         catch(Exception e)
         {
-            //Debug.LogError(e);
+            Debug.LogError(e);
         }
         finally
         {

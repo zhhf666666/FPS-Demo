@@ -15,6 +15,11 @@ public class BeginningController : MonoBehaviour
     public Text AlertText;
     public float AlertTime = 2;
     public static UserInfo User;
+    private ClientSocket CS = new ClientSocket();
+    public InputField UserNameInput;
+    public InputField PasswordInput;
+    private const string IP = "127.0.0.1";
+    private const int PORT = 6666;
 
     void Start()
     {
@@ -31,6 +36,7 @@ public class BeginningController : MonoBehaviour
     void Update()
     {
         this.transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime);
+        CheckMessage();
     }
 
     public void FirstEnterGame()
@@ -49,8 +55,8 @@ public class BeginningController : MonoBehaviour
     public void SetUserInformation()
     {
         UserName.text = "用户名: " + User.UserName;
-        GameTimes.text = "游玩次数: " + User.GameTimes.ToString();
-        MaxLevelRecord.text = "最高关卡记录: " + User.MaxLevelRecord.ToString();
+        GameTimes.text = "游玩次数: " + User.GameTimes;
+        MaxLevelRecord.text = "最高关卡记录: " + User.MaxLevelRecord;
     }
 
     public void ExitGame()
@@ -86,10 +92,66 @@ public class BeginningController : MonoBehaviour
         NotFirstEnterGame();
     }
 
+    private void Send(JSONObject temp)
+    {
+        string temp2 = JSONConvert.SerializeObject(temp);
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(temp2);
+        CS.SendData(data);
+    }
+
     public void OnlineLogin()
     {
-        string content = "111";
-        StopCoroutine("DisplayAlert");
-        StartCoroutine("DisplayAlert", content);
+        StartCoroutine("SendOnlineLogin");
+    }
+
+    IEnumerator SendOnlineLogin()
+    {
+        if(UserNameInput.text.Length == 0 || PasswordInput.text.Length == 0)
+        {
+            StopCoroutine("DisplayAlert");
+            StartCoroutine("DisplayAlert", "用户名或密码不能为空!");
+            yield break;
+        }
+        if(CS.connected == false)
+        {
+            CS.Connect(IP, PORT);
+            if(CS.connected == false)
+            {
+                StopCoroutine("DisplayAlert");
+                StartCoroutine("DisplayAlert", "连接服务端失败");
+                yield break;
+            }
+        }
+        JSONObject obj = new JSONObject();
+        obj["Title"] = "Login";
+        obj["UserName"] = UserNameInput.text;
+        obj["Password"] = PasswordInput.text;
+        Send(obj);
+    }
+
+    public void CheckMessage()
+    {
+        if(CS.connected)
+        {
+            CS.BeginReceive();
+        }
+        string msg = CS.GetMsgFromQueue();
+        if(!string.IsNullOrEmpty(msg))
+        {
+            JSONObject obj = JSONConvert.DeserializeObject(msg);
+            if(obj["Title"].ToString() == "Error")
+            {
+                StopCoroutine("DisplayAlert");
+                StartCoroutine("DisplayAlert", obj["Message"].ToString());
+                PasswordInput.text = "";
+            }
+            else if(obj["Title"].ToString() == "UserInformation" && User == null)
+            {
+                User = new UserInfo(obj["UserName"].ToString(), obj["GameTimes"].ToString(), obj["MaxLevelRecord"].ToString());
+                CS.CloseSocket();
+                NotFirstEnterGame();
+            }
+            
+        }
     }
 }
