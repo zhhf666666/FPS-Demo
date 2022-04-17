@@ -14,22 +14,25 @@ public class BeginningController : MonoBehaviour
     public Text MaxLevelRecord;
     public Text AlertText;
     public float AlertTime = 2;
-    public static UserInfo User;
+    public UserInfo User;
     private ClientSocket CS = new ClientSocket();
     public InputField UserNameInput;
     public InputField PasswordInput;
     private const string IP = "127.0.0.1";
+    //private const string IP = "185.3.87.160";
     private const int PORT = 6666;
 
     void Start()
     {
-        if(User == null)
+        if(UserInfo.DoesExist() == false)
         {
             FirstEnterGame();
         }
         else
         {
+            User = UserInfo.GetInstance();
             NotFirstEnterGame();
+            StartCoroutine("SendUserInfo");
         }
     }
 
@@ -75,7 +78,7 @@ public class BeginningController : MonoBehaviour
 
     public void ReturnToLogin()
     {
-        User = null;
+        User.DeleteInstance();
         FirstEnterGame();
     }
 
@@ -88,7 +91,10 @@ public class BeginningController : MonoBehaviour
 
     public void OfflineLogin()
     {
-        User = new UserInfo("游客");
+        User = UserInfo.GetInstance();
+        User.UserName = "游客";
+        User.GameTimes = "0";
+        User.MaxLevelRecord = "0";
         NotFirstEnterGame();
     }
 
@@ -129,6 +135,26 @@ public class BeginningController : MonoBehaviour
         Send(obj);
     }
 
+    IEnumerator SendUserInfo()
+    {
+        if(CS.connected == false)
+        {
+            CS.Connect(IP, PORT);
+            if(CS.connected == false)
+            {
+                StopCoroutine("DisplayAlert");
+                StartCoroutine("DisplayAlert", "连接服务端失败");
+                yield break;
+            }
+        }
+        JSONObject obj = new JSONObject();
+        obj["Title"] = "UpdateUserInfo";
+        obj["UserName"] = User.UserName;
+        obj["GameTimes"] = User.GameTimes;
+        obj["MaxLevelRecord"] = User.MaxLevelRecord;
+        Send(obj);
+    }
+
     public void CheckMessage()
     {
         if(CS.connected)
@@ -144,14 +170,17 @@ public class BeginningController : MonoBehaviour
                 StopCoroutine("DisplayAlert");
                 StartCoroutine("DisplayAlert", obj["Message"].ToString());
                 PasswordInput.text = "";
+                CS.CloseSocket();
             }
             else if(obj["Title"].ToString() == "UserInformation" && User == null)
             {
-                User = new UserInfo(obj["UserName"].ToString(), obj["GameTimes"].ToString(), obj["MaxLevelRecord"].ToString());
+                User = UserInfo.GetInstance();
+                User.UserName = obj["UserName"].ToString();
+                User.GameTimes = obj["GameTimes"].ToString();
+                User.MaxLevelRecord = obj["MaxLevelRecord"].ToString();
                 CS.CloseSocket();
                 NotFirstEnterGame();
             }
-            
         }
     }
 }

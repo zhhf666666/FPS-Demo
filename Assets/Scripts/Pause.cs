@@ -9,6 +9,7 @@ public class Pause : MonoBehaviour
     public GameObject PauseCanvas;
     public GameManager GM;
     public AudioSource PauseAudio;
+    public UserInfo User;
 
     void Start()
     {
@@ -44,6 +45,7 @@ public class Pause : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        UpdateUserInfo();
         SceneManager.LoadScene("BeginningScene");
         Time.timeScale = 1;
     }
@@ -62,5 +64,15 @@ public class Pause : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
         Time.timeScale = 1;
+    }
+
+    public void UpdateUserInfo()
+    {
+        User = UserInfo.GetInstance();
+        int num = int.Parse(User.GameTimes);
+        User.GameTimes = (num + 1).ToString();
+        num = int.Parse(User.MaxLevelRecord);
+        if(num < GM.GameLevel - 1)
+            User.MaxLevelRecord = (GM.GameLevel - 1).ToString();
     }
 }

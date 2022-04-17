@@ -4,6 +4,7 @@ import threading
 import time
 import sys
 import json
+import os
 
 def socket_service():
     try:
@@ -34,17 +35,39 @@ def deal_data(conn, addr):
         if (data2['Title'] == 'Login'):
             th = threading.Thread(target=LoginFunc, args=(conn, data2["UserName"], data2["Password"]))
             th.start()
+        elif(data2['Title'] == 'UpdateUserInfo'):
+            th = threading.Thread(target=UpdateUserInfoFunc, args=(conn, data2))
+            th.start()
     conn.close()
 
+def UpdateUserInfoFunc(conn, data):
+    path = 'Acount/' + data['UserName'] + '.json'
+    with open(path, 'r') as f:
+        JsonData = json.load(f)
+        JsonData["GameTimes"] = data["GameTimes"]
+        JsonData["MaxLevelRecord"] = data["MaxLevelRecord"]
+        data = JsonData
+    with open(path, 'w') as f:
+        json.dump(data, f)
+
 def LoginFunc(conn, UserName, Password):
-    if(UserName == "admin" and Password == "admin"):
-        data = [{'Title': 'UserInformation', 'UserName': UserName, 'GameTimes': '0', 'MaxLevelRecord': '0'}]
-        data2 = json.dumps(data)
-        conn.send(data2.encode())
+    path = 'Acount/' + UserName + '.json'
+    if(os.path.exists(path)):
+        with open(path, 'r') as f:
+            JsonData = json.load(f)
+            if(Password == JsonData["Password"]):
+                data = [{'Title': 'UserInformation', 'UserName': UserName, 'GameTimes': JsonData["GameTimes"], 'MaxLevelRecord': JsonData["MaxLevelRecord"]}]
+                data2 = json.dumps(data)
+                conn.send(data2.encode())
+            else:
+                SendErrorMessage(conn, "用户名或密码错误！")
     else:
-        data = [{'Title':'Error', 'Message': '用户名或密码错误！'}]
-        data2 = json.dumps(data, ensure_ascii=False)
-        conn.send(data2.encode(encoding='utf8'))
+        SendErrorMessage(conn, "用户名或密码错误！")
+
+def SendErrorMessage(conn, msg):
+    data = [{'Title': 'Error', 'Message': msg}]
+    data2 = json.dumps(data, ensure_ascii=False)
+    conn.send(data2.encode(encoding='utf8'))
 
 if __name__ == '__main__':
     socket_service()

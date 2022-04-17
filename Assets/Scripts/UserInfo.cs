@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class UserInfo
 {
+    private static UserInfo Instance;
     public string UserName;
     public string GameTimes;
     public string MaxLevelRecord;
 
-    public UserInfo(string name)
+    private UserInfo() {}
+
+    public static UserInfo GetInstance()
     {
-        UserName = name;
-        GameTimes = "0";
-        MaxLevelRecord = "0";
+        if(Instance == null)
+            Instance = new UserInfo();
+        return Instance;
     }
 
-    public UserInfo(string name, string times, string record)
+    public static bool DoesExist()
     {
-        UserName = name;
-        GameTimes = times;
-        MaxLevelRecord = record;
+        if(Instance == null)
+            return false;
+        else
+            return true;
+    }
+
+    public void DeleteInstance()
+    {
+        Instance = null;
     }
 }
