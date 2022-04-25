@@ -6578,7 +6578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletAmount: {fileID: 1557057359}
-  Max: 7
+  Max: 10
 --- !u!82 &242845105
 AudioSource:
   m_ObjectHideFlags: 0
@@ -53418,7 +53418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletAmount: {fileID: 1557057359}
-  Max: 20
+  Max: 30
 --- !u!82 &2141322663
 AudioSource:
   m_ObjectHideFlags: 0
@@ -54239,7 +54239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960039530b86e5747ad6256438de04e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  HP: 200
   MaxHP: 300
   PHSlider: {fileID: 1711958105}
   HealthNum: {fileID: 258200860}
@@ -56563,7 +56563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotateSpeed: 180
-  RotateRatio: 2
+  RotateRatio: 1
   PlayerTrans: {fileID: 972153534}
   EyeTrans: {fileID: 157667315}
   VerticalOffsetLimitation: 60

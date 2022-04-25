@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
-    public int HP = 100;
+    public int HP;
     public int MaxHP = 300;
     public Slider PHSlider;
     public Text HealthNum;
@@ -61,7 +61,7 @@ public class HealthController : MonoBehaviour
         if(EC)
             HP = MaxHP;
         else if(PC)
-            HP = 100;
+            HP = 200;
         PHSlider.value = HP;
         SetText();
     }

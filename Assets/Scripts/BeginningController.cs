@@ -32,7 +32,8 @@ public class BeginningController : MonoBehaviour
         {
             User = UserInfo.GetInstance();
             NotFirstEnterGame();
-            StartCoroutine("SendUserInfo");
+            if(User.UserName != "游客")
+                StartCoroutine("SendUserInfo");
         }
     }
 

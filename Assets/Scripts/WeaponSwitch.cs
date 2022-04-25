@@ -62,6 +62,10 @@ public class WeaponSwitch : MonoBehaviour
         Icons[Current].color = new Color32(152, 152, 152, 255);
         Icons[Next].color = new Color32(255, 255, 255, 255);
         ECC.WeaponCameraCenterPos = CameraCenterParameter[Next];
+        if(Input.GetMouseButton(1))
+        {
+            ECC.DefaultToCenterFunc();
+        }
         Weapons[Current].transform.localPosition = new Vector3(0, -100, 0);
         if(Current == 0)
             Weapons[Current].GetComponent<Pistol>().Interrupt();

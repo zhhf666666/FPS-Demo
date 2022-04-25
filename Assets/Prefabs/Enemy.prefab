@@ -336,13 +336,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyAgent: {fileID: 3271914639780845597}
-  Player: {fileID: 0}
-  MinDistance: 6
-  Ani: {fileID: 2101306000319728647}
+  IsLiving: 1
   HC: {fileID: 3271914640996713481}
   LerpRatio: 0.05
   DeathTime: 1
   RobotExplosion: {fileID: 1884939572830390928, guid: e5fca6e17d11088499fae1023b483fec, type: 3}
+  HBAC: {fileID: 0}
+  IsLocking: 0
+  MinDistance: 6
+  Player: {fileID: 0}
+  BombDamage: 80
+  MinBombDistance: 0.6
+  Explosion: {fileID: 0}
+  Exclamation: {fileID: 0}
+  InitDistanceFromPlayer: 10
+  GM: {fileID: 0}
+  AlertAudio: {fileID: 0}
 --- !u!136 &7071918499814580540
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -374,6 +383,7 @@ MonoBehaviour:
   PHSlider: {fileID: 993239744733100729}
   HealthNum: {fileID: 0}
   EC: {fileID: 3271914639780845598}
+  PC: {fileID: 0}
 --- !u!114 &2101306000319728647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +399,7 @@ MonoBehaviour:
   MoveSpeed: 0
   Alerted: 0
   HoverBotAnimator: {fileID: 0}
+  GM: {fileID: 0}
 --- !u!1 &7605749419575512369
 GameObject:
   m_ObjectHideFlags: 0

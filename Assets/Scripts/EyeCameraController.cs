@@ -30,8 +30,7 @@ public class EyeCameraController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(1))
         {
-            StopCoroutine("CenterToDefault");
-            StartCoroutine("DefaultToCenter");
+            DefaultToCenterFunc();
         }
         if(Input.GetMouseButtonUp(1))
         {
@@ -60,5 +59,11 @@ public class EyeCameraController : MonoBehaviour
             MainCamera.fieldOfView = Mathf.Lerp(MainCamera.fieldOfView, DefaultView, LerpRatio);
             yield return null;
         }
+    }
+
+    public void DefaultToCenterFunc()
+    {
+        StopCoroutine("CenterToDefault");
+        StartCoroutine("DefaultToCenter");
     }
 }
