@@ -1039,7 +1039,7 @@ MonoBehaviour:
   IsLocking: 0
   MinDistance: 6
   Player: {fileID: 0}
-  BombDamage: 100
+  BombDamage: 80
   MinBombDistance: 0.6
   Explosion: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647, type: 3}
   Exclamation: {fileID: 8855434715677272936, guid: 1bc9e4f49c67a6a41af3e7cb3d30bb43, type: 3}
